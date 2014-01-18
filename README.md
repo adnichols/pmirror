@@ -1,5 +1,8 @@
 # Pmirror
 
+[![Build
+Status](https://travis-ci.org/adnichols/pmirror.png?branch=master)](https://travis-ci.org/adnichols/pmirror)
+
 pmirror is a tool primarily intended to mirror a subset of files from a
 remote http repository. I created the tool because I wanted a way to
 mirror just some files from a remote RPM repository to a local
