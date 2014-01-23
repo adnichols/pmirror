@@ -8,25 +8,30 @@ module Pmirror
     include Methadone::Main
     include Methadone::CLILogging
     include Methadone::SH
+    version(::Pmirror::VERSION)
 
     main do
       d "Inside main"
 
-      download_list = get_download_list(options[:url], options[:pattern])
-      d "download_list: #{download_list.inspect}"
-      download_files(options[:localdir], download_list)
-      execute(options[:exec]) if options[:exec]
+      if options[:url] && options[:pattern] && options[:localdir]
+        download_list = get_download_list(options[:url], options[:pattern])
+        d "download_list: #{download_list.inspect}"
+        download_files(options[:localdir], download_list)
+
+        execute(options[:exec]) if options[:exec]
+      else
+        help_now!("Missing arguments")
+      end
 
     end
 
     description "Mirror files on a remote http server based on pattern match"
-    on("-p", "--pattern PAT1,PAT2,PAT3", Array,
+    on("-p", "--pattern PAT,PAT", Array,
        "Regex to match files in remote dir, may specify multiple patterns"
       )
     on("-l", "--localdir DIR", "Local directory to mirror files to")
     on("-e", "--exec CMD", "Execute command after completion")
     on("-d", "--debug", "Enable debugging")
-    on("-v", "--version", "Show version")
     on("-u", "--url URL,URL", Array, "Url or remote site")
 
     def self.d(msg)
