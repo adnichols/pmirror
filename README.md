@@ -17,6 +17,9 @@ find it.
 The tool is very new so it only has the bare minimum feature set:
 
 - Specify multiple regex patterns to match against the remote directory
+- Specify a list of URL's to look for patterns across, this means you
+  can look for the same patterns on multiple urls and aggregate those
+  files into one place
 - Provides a progressbar download status indicator
 - Specify a local directory to download files to
 - Specify a command to execute on the local directory once all files are
@@ -53,6 +56,8 @@ Options:
     -h, --help                       Show command line help
     -p, --pattern PAT1,PAT2,PAT3     Regex to match files in remote dir,
 may specify multiple patterns
+    -u --url                         One or more URL's to check for
+files that match the defined patterns
     -l, --localdir DIR               Local directory to mirror files to
     -e, --exec CMD                   Execute command after completion
     -d, --debug                      Enable debugging
@@ -61,9 +66,13 @@ may specify multiple patterns
 
 Usage should be pretty self explanatory but here are the details:
 
-`url` is the remote URL that you want to fetch files from. Right now
+`--url` is the remote URL that you want to fetch files from. Right now
 this is assumed to be an un-authenticated url. We do not recurse into
-directories looking for files.
+directories looking for files. You may specify more than one url and we
+will look at each url and download any matching files from that url. If
+the same filename is matched across multiple URL's only the first will
+be downloaded, subsequent files will see that there is already a local
+file with the same name and will not download. 
 
 `--pattern` allows you to specify a comma separated list of patterns to
 match on the remote directly. We will iterate over each pattern and
