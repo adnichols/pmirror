@@ -1,4 +1,12 @@
 language: ruby
-rvm: 
-  - 1.9.3
-  - 2.1.0
+rvm:
+- 1.9.3
+- 2.1.0
+deploy:
+  provider: rubygems
+  api_key:
+    secure: T0PsyTzE9ZIhs48xHxMUNIjzGS9pu5iYVYR8K6sUjcv2H5zmg/R3PZ3g6DK8tvnLHCgI5nrZ0Nb+BJgH+65yRMJrrFAjJISDTh/3gWq+nlTq4IFxgYOvFrCQXl2IyhjpkFktUxHBWMnz7v6iTZJt/Ej+My4iQ8X6kl4WiAnKJJ4=
+  gem: pmirror
+  on:
+    tags: true
+    repo: adnichols/pmirror
