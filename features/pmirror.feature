@@ -14,25 +14,28 @@ Feature: My bootstrapped app kinda works
       |--localdir|
       |--exec|
       |--version|
-    And the banner should document that this app's arguments are:
-      |url|which is required|
-
+      |--url|
+      |-p|
+      |-d|
+      |-l|
+      |-e|
+      |-u|
 
   Scenario: Download a file
-    When I successfully run `pmirror -p meh -l ../foo http://localhost:55555`
+    When I successfully run `pmirror -p meh -l ../foo -u http://localhost:55555`
     Then the exit status should be 0
     And the following files should exist:
       |../foo/meh.txt|
 
   Scenario: Execute on local directory
-    When I successfully run `pmirror -p meh -l ../foo -e "touch test" http://localhost:55555`
+    When I successfully run `pmirror -p meh -l ../foo -e "touch test" -u http://localhost:55555`
     Then the exit status should be 0
     And the following files should exist:
       |../foo/meh.txt|
       |../foo/test   |
 
   Scenario: Match multiple files
-    When I successfully run `pmirror -p floo -l ../foo http://localhost:55555`
+    When I successfully run `pmirror -p floo -l ../foo -u http://localhost:55555`
     Then the exit status should be 0
     And the following files should exist:
       | ../foo/floober.txt|
@@ -42,7 +45,7 @@ Feature: My bootstrapped app kinda works
       | ../foo/meh.txt|
 
   Scenario: Match multiple patterns
-    When I successfully run `pmirror -p '^floo.*','^mah.*' -l ../foo http://localhost:55555`
+    When I successfully run `pmirror -p '^floo.*','^mah.*' -l ../foo -u http://localhost:55555`
     Then the exit status should be 0
     And the following files should exist:
       | ../foo/floober.txt|
@@ -51,5 +54,13 @@ Feature: My bootstrapped app kinda works
     And the following files should not exist:
       | ../foo/meh.txt|
 
-
+  Scenario: Match multiple urls
+    When I successfully run `pmirror -p '^floo.*','^mah.*' -l ../foo -u http://localhost:55555,http://localhost:55555`
+    Then the exit status should be 0
+    And the following files should exist:
+      | ../foo/floober.txt|
+      | ../foo/floobah.txt|
+      | ../foo/mah.txt|
+    And the following files should not exist:
+      | ../foo/meh.txt|
 
