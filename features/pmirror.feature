@@ -67,3 +67,13 @@ Feature: My bootstrapped app kinda works
       | ../foo/mah.txt|
     And the following files should not exist:
       | ../foo/meh.txt|
+
+  Scenario: Use a config file
+    When I successfully run `pmirror -c ../../pmirror_test_config.yaml`
+    Then the exit status should be 0
+    And the following files should exist:
+      | ../foo/floober.txt|
+      | ../foo/floobah.txt|
+      | ../foo/mah.txt|
+    And the following files should not exist:
+      | ../foo/meh.txt|

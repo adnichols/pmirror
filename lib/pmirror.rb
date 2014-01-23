@@ -11,14 +11,19 @@ module Pmirror
     version(::Pmirror::VERSION)
 
     main do
-      debug ":: Log Level set to debug"
       debug "Inside main"
-      debug "Options:\n" + options.inspect
+
+      parse_config(options[:config]) if options[:config]
+      normalize_defaults
 
       if options[:url] && options[:pattern] && options[:localdir]
         download_list = get_download_list(options[:url], options[:pattern])
         debug "download_list: #{download_list.inspect}"
-        download_files(options[:localdir], download_list)
+        if download_list
+          download_files(options[:localdir], download_list)
+        else
+          info "No files to download"
+        end
 
         execute(options[:exec]) if options[:exec]
       else
@@ -34,8 +39,20 @@ module Pmirror
     on("-l", "--localdir DIR", "Local directory to mirror files to")
     on("-e", "--exec CMD", "Execute command after completion")
     on("-u", "--url URL,URL", Array, "Url or remote site")
+    on("-c", "--config FILE", "Config file (yaml) to use instead of command line options")
 
     use_log_level_option
+
+    def self.parse_config(config_file)
+      debug "In parse_config"
+      parsed = YAML::load_file(config_file)
+      if parsed.kind_of? Hash
+        parsed.each do |option,value|
+          debug "Storing option '#{option}' with value '#{value.inspect}'"
+          options[option] = value
+        end
+      end
+    end
 
     def self.get_download_list(url_list, pattern)
       debug "inside get_download_list"
