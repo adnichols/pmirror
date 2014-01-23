@@ -13,6 +13,8 @@ module Pmirror
     main do
       d "Inside main"
 
+      parse_config(options[:config]) if options[:config]
+
       if options[:url] && options[:pattern] && options[:localdir]
         download_list = get_download_list(options[:url], options[:pattern])
         d "download_list: #{download_list.inspect}"
@@ -33,11 +35,25 @@ module Pmirror
     on("-e", "--exec CMD", "Execute command after completion")
     on("-d", "--debug", "Enable debugging")
     on("-u", "--url URL,URL", Array, "Url or remote site")
+    on("-c", "--config FILE", "Config file (yaml) to use instead of command line options")
 
     def self.d(msg)
       if options[:debug]
         puts "[DEBUG]: #{msg}"
       end
+    end
+
+    def self.parse_config(config_file)
+      debug "In parse_config"
+      File.open(config_file) do |file|
+        parsed = YAML::load(file)
+        if parsed.kind_of? Hash
+          parsed.each do |option,value|
+            options[option, value]
+          end
+        end
+      end
+
     end
 
     def self.get_download_list(url_list, pattern)
