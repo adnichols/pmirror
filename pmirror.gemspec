@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["anichols@trumped.org"]
   spec.description   = %q{Mirror files from remote http server by pattern}
   spec.summary       = %q{Mirror files from remote http server by pattern}
-  spec.homepage      = ""
+  spec.homepage      = "http://github.com/adnichols/pmirror"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
