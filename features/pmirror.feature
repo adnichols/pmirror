@@ -11,13 +11,12 @@ Feature: My bootstrapped app kinda works
     And the banner should document that this app takes options
     And the following options should be documented:
       |--pattern|
-      |--debug|
       |--localdir|
       |--exec|
       |--version|
       |--url|
+      |--log-level|
       |-p|
-      |-d|
       |-l|
       |-e|
       |-u|
@@ -68,4 +67,3 @@ Feature: My bootstrapped app kinda works
       | ../foo/mah.txt|
     And the following files should not exist:
       | ../foo/meh.txt|
-
