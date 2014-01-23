@@ -1,4 +1,7 @@
-localdir: "../foo"
-pattern: '^floo.*','^mah.*'
-url: "http://localhost:55555","http://localhost:55555"
-
+localdir: ../foo
+pattern: 
+  - ^floo.*
+  - ^mah.*
+url: 
+  - http://localhost:55555
+  - http://localhost:55555

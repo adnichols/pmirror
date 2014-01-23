@@ -54,13 +54,12 @@ Usage: pmirror [options] url
 
 Options:
     -h, --help                       Show command line help
-    -p, --pattern PAT1,PAT2,PAT3     Regex to match files in remote dir,
-may specify multiple patterns
-    -u --url                         One or more URL's to check for
-files that match the defined patterns
+    -p, --pattern PAT1,PAT2,PAT3     Regex to match files in remote dir, may specify multiple patterns
+    -u --url                         One or more URL's to check for files that match the defined patterns
     -l, --localdir DIR               Local directory to mirror files to
     -e, --exec CMD                   Execute command after completion
-    -d, --debug                      Enable debugging
+        --log-level                  Set the logging level to one of [ debug, info, warn, error]
+    -c, --config FILE                Config file to read command line options from (yaml)
     -v, --version                    Show version
 ```
 
@@ -74,13 +73,30 @@ the same filename is matched across multiple URL's only the first will
 be downloaded, subsequent files will see that there is already a local
 file with the same name and will not download. 
 
+Example:
+```
+pmirror --url http://someurl.com    # Single URL
+pmirror --url http://someurl.com,http://someotherurl.com # Multiple URLs
+```
+
 `--pattern` allows you to specify a comma separated list of patterns to
 match on the remote directly. We will iterate over each pattern and
 build up the file list to fetch from the remote url. 
 
+Example:
+```
+pmirror --pattern foo               # Single pattern
+pmirror --pattern foo,bar           # Multiple patterns
+```
+
 `--localdir` is the location you want files downloaded to. It is also
 the directory in which any commands specified with `--exec` will be
 performed.
+
+Example:
+```
+pmirror --localdir /tmp/foo
+```
 
 `--exec` is used to perform actions on the download directory. The
 envisioned use case right now is simply to run a createrepo when the
@@ -89,7 +105,30 @@ specified in `--localdir` and then will run the command you specify.
 There is not currently a way to pass the value of `--localdir` into a
 command other than to specify `.` in your command. 
 
-`--debug` would enable some extra output
+Example:
+```
+pmirror --exec 'createrepo -c .cache -d .'
+```
+
+`--log-level` will set the logging level when you run the application.
+This enables additional messaging. The most useful log levels right now
+are `info` and `debug`. 
+
+`--config` allows you to put all of your command line options into a
+YAML formatted configuration file. Unlike the command line, lists of
+options here (like pattern: or url:) are YAML lists. Each key must be
+the long name of the option to use. There is no default config file. 
+
+Example config:
+```
+localdir: ../foo
+pattern:
+  - ^floo.*
+  - ^mah.*
+url:
+  - http://localhost:55555
+  - http://localhost:55555
+```
 
 `--version` provides the version info
 
