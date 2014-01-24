@@ -55,7 +55,7 @@ Usage: pmirror [options] url
 Options:
     -h, --help                       Show command line help
     -p, --pattern PAT1,PAT2,PAT3     Regex to match files in remote dir, may specify multiple patterns
-    -u --url                         One or more URL's to check for files that match the defined patterns
+    -u, --url                         One or more URL's to check for files that match the defined patterns
     -l, --localdir DIR               Local directory to mirror files to
     -e, --exec CMD                   Execute command after completion
         --log-level                  Set the logging level to one of [ debug, info, warn, error]
