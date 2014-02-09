@@ -1,7 +1,6 @@
 # Pmirror
 
-[![Build
-Status](https://travis-ci.org/adnichols/pmirror.png?branch=master)](https://travis-ci.org/adnichols/pmirror)
+[![Build Status](https://drone.io/github.com/adnichols/pmirror/status.png)](https://drone.io/github.com/adnichols/pmirror/latest)
 
 pmirror is a tool primarily intended to mirror a subset of files from a
 remote http repository. I created the tool because I wanted a way to
