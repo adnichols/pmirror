@@ -1,0 +1,11 @@
+image: bradrydzewski/ruby:2.0.0
+env:
+script:
+  - bundle install
+  - rake
+services:
+notify:
+  email:
+    recipients:
+      - brad@drone.io
+      - burke@drone.io
