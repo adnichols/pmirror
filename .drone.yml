@@ -7,5 +7,4 @@ services:
 notify:
   email:
     recipients:
-      - brad@drone.io
-      - burke@drone.io
+      - anichols@trumped.org
